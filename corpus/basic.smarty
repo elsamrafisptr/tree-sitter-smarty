@@ -1,0 +1,28 @@
+<div class="greeting">
+    Hello, <span>{$name}</span>!
+</div>
+{if $count > 0}
+    <p>You have {$count} items.</p>
+{else}
+    <p>No items.</p>
+{/if}
+{foreach $item as $key => $value}
+    <li>{$key}: {$value}</li>
+{/foreach}
+{* This is a smarty comment { with braces } and "strings" *}
+{if $a == $b || $c}
+    {assign var='out' value="string with { brace } inside"}
+{/if}
+{{double}}
+{{foreach $i in $items}}
+    <span>{{$i}}</span>
+{{/foreach}}
+<script>
+    var o = { a: 1, b: { c: 2 } };
+    function f(x) { return { notsmarty: x }; }
+    var s = "{ not a smarty tag }";
+</script>
+<style>
+    .a { color: red; }
+    .b { background: { not smarty either }; }
+</style>

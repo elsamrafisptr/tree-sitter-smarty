@@ -19,11 +19,11 @@
     "description": "Smarty template grammar (HTML + Smarty tags)",
     "authors": [
       {
-        "name": "smarty-zed-support"
+        "name": "Elsam Rafi Saputra"
       }
     ],
     "links": {
-      "repository": "https://github.com/"
+      "repository": "https://github.com/elsamrafisptr/tree-sitter-smarty"
     }
   },
   "bindings": {

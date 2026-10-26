@@ -1,19 +1,22 @@
 {
   "name": "tree-sitter-smarty",
   "version": "0.1.0",
-  "description": "Smarty template grammar",
-  "main": "bindings/node",
+  "description": "Smarty template grammar for tree-sitter (HTML + Smarty tags)",
   "keywords": [
     "tree-sitter",
     "smarty",
     "parser"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elsamrafisptr/tree-sitter-smarty.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "tree-sitter-cli": "^0.25.8"
   },
   "scripts": {
-    "test": "tree-sitter test",
+    "generate": "tree-sitter generate",
     "parse": "tree-sitter parse"
   }
 }
