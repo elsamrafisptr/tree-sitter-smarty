@@ -128,7 +128,7 @@ static void deserialize(Scanner *scanner, const char *buffer, unsigned length) {
                     uint16_t name_length = (uint8_t)buffer[size++];
                     array_reserve(&tag.custom_tag_name, name_length);
                     tag.custom_tag_name.size = name_length;
-                    memcpy(&tag.custom_tag_name.contents, &buffer[size], name_length);
+                    memcpy(tag.custom_tag_name.contents, &buffer[size], name_length);
                     size += name_length;
                 }
                 array_push(&scanner->tags, tag);

@@ -121,30 +121,33 @@ module.exports = grammar({
     start_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat($._attribute_item),
       '>',
     ),
 
     script_start_tag: $ => seq(
       '<',
       alias($._script_start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat($._attribute_item),
       '>',
     ),
 
     style_start_tag: $ => seq(
       '<',
       alias($._style_start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat($._attribute_item),
       '>',
     ),
 
     self_closing_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat($._attribute_item),
       '/>',
     ),
+
+    // Smarty may wrap whole attributes: <a {if $url}href="{$url}"{/if}>
+    _attribute_item: $ => choice($.attribute, $.smarty_tag),
 
     end_tag: $ => seq(
       '</',
@@ -169,7 +172,7 @@ module.exports = grammar({
       )),
     ),
 
-    attribute_name: _ => /[^<>"'/=\s]+/,
+    attribute_name: _ => /[^<>"'/=\s{}]+/,
 
     attribute_value: _ => /[^<>"'=\s]+/,
 
@@ -178,9 +181,10 @@ module.exports = grammar({
     // no more will ever be added.
     entity: _ => /&(#([xX][0-9a-fA-F]{1,6}|[0-9]{1,5})|[A-Za-z]{1,30});?/,
 
+    // Quoted values may contain Smarty tags: class="a {if $x}b{/if}"
     quoted_attribute_value: $ => choice(
-      seq('\'', optional(alias(/[^']+/, $.attribute_value)), '\''),
-      seq('"', optional(alias(/[^"]+/, $.attribute_value)), '"'),
+      seq('\'', repeat(choice(alias(/[^'{]+/, $.attribute_value), $.smarty_tag, $.smarty_brace)), '\''),
+      seq('"', repeat(choice(alias(/[^"{]+/, $.attribute_value), $.smarty_tag, $.smarty_brace)), '"'),
     ),
 
     text: _ => /[^<>&\s{}]([^<>&{}]*[^<>&\s{}])?/,

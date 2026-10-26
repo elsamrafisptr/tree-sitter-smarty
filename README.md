@@ -23,6 +23,7 @@ Regenerate it after every change to `grammar.js`:
 ```sh
 npm install
 npx tree-sitter generate
+npx tree-sitter test          # test/corpus/*.txt
 npx tree-sitter parse corpus/basic.smarty
 ```
 

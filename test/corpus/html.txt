@@ -1,0 +1,104 @@
+==================
+Custom element names survive scanner state restore
+==================
+
+<svg><path d="M1 2"/><foo></foo></svg>
+
+---
+
+(document
+  (element
+    (start_tag
+      (tag_name))
+    (element
+      (self_closing_tag
+        (tag_name)
+        (attribute
+          (attribute_name)
+          (quoted_attribute_value
+            (attribute_value)))))
+    (element
+      (start_tag
+        (tag_name))
+      (end_tag
+        (tag_name)))
+    (end_tag
+      (tag_name))))
+
+==================
+Smarty tags between attributes
+==================
+
+<a {if $u}href="{$u}"{/if} class="x">t</a>
+
+---
+
+(document
+  (element
+    (start_tag
+      (tag_name)
+      (smarty_tag
+        (smarty_open)
+        (smarty_word
+          (smarty_keyword))
+        (smarty_variable)
+        (smarty_close))
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (smarty_tag
+            (smarty_open)
+            (smarty_variable)
+            (smarty_close))))
+      (smarty_tag
+        (smarty_open)
+        (smarty_operator)
+        (smarty_word
+          (smarty_keyword))
+        (smarty_close))
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value))))
+    (text)
+    (end_tag
+      (tag_name))))
+
+==================
+Smarty tags inside quoted attribute values
+==================
+
+<li class="a{if $b} c{/if}" title='{$t}'></li>
+
+---
+
+(document
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value)
+          (smarty_tag
+            (smarty_open)
+            (smarty_word
+              (smarty_keyword))
+            (smarty_variable)
+            (smarty_close))
+          (attribute_value)
+          (smarty_tag
+            (smarty_open)
+            (smarty_operator)
+            (smarty_word
+              (smarty_keyword))
+            (smarty_close))))
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (smarty_tag
+            (smarty_open)
+            (smarty_variable)
+            (smarty_close)))))
+    (end_tag
+      (tag_name))))
