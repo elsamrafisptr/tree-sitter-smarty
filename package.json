@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-smarty",
+  "version": "0.1.0",
+  "description": "Smarty template grammar",
+  "main": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "smarty",
+    "parser"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25.8"
+  },
+  "scripts": {
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  }
+}
